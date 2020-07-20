@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.BookInfoDao">
+    <select id="selectBookInfo" resultType="book_info">
+        select * from book_info
+    </select>
+
+    <select id="selectBookInfoById" resultType="book_info" parameterType="long">
+        select * from book_info where book_id = #{id}
+    </select>
+
+    <select id="selectBookInfoByName" resultType="book_info" parameterType="String">
+        select * from book_info where book_name like concat('%',#{bookname},'%')
+    </select>
+
+    <select id="selectBookInfoByType" resultType="book_info" parameterType="String">
+        select * from book_info where type = #{type}
+    </select>
+
+    <update id="updateBookInfoById">
+        UPDATE book_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="book_info.book_id!=null">book_id=#{book_info.book_id},</if>
+            <if test="book_info.book_name != null">book_name=#{book_info.book_name},</if>
+            <if test="book_info.number!=null">number=#{book_info.number},</if>
+            <if test="book_info.type!=null">type=#{book_info.type},</if>
+            <if test="book_info.press!=null">press=#{book_info.press},</if>
+            <if test="book_info.author!=null">author=#{book_info.author},</if>
+        </trim>
+        WHERE book_id=#{book_info.book_id}
+    </update>
+    <insert id="insertBook" parameterType="book_info">
+        insert into book_info (book_name,number,type,press,author) values (#{book_info.book_name},#{book_info.number},#{book_info.type},#{book_info.press},#{book_info.author})
+    </insert>
+    <delete id="deleteBookById" parameterType="long">
+        delete book_info where book_id = #{id}
+    </delete>
+</mapper>

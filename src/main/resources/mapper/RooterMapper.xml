@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.RooterDao">
+    <select id="selectRooterByName" resultType="rooter" parameterType="String">
+        select * from rooter where admin_name = #{name}
+    </select>
+    <update id="updateRooterInfo">
+        UPDATE rooter
+        <trim prefix="set" suffixOverrides=",">
+            <if test="rooter.admin_name!=null">admin_name=#{rooter.admin_name},</if>
+            <if test="rooter.admin_password != null">admin_password=#{rooter.admin_password},</if>
+        </trim>
+        WHERE admin_name=#{name}
+    </update>
+</mapper>

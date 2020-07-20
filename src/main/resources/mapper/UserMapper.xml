@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UserDao">
+    <resultMap id="userBorrowingInfo" type="user">
+        <id property="user_name" column="user_name"></id>
+        <result property="phone_number" column="phone_number"></result>
+        <result property="day" column="day"></result>
+        <result property="overdue" column="overdue"></result>
+        <collection property="bookList" ofType="book_borrowing_status">
+            <id property="book_id" column="book_id"></id>
+            <result property="user_name" column="user_name"></result>
+            <result property="appoint_time" column="appoint_time"></result>
+            <result property="book_state" column="book_state"></result>
+            <association property="bookInfo" javaType="book_info">
+                <id property="book_id" column="book_id"></id>
+                <result property="book_name" column="book_name"></result>
+                <result property="number" column="number"></result>
+                <result property="type" column="type"></result>
+                <result property="press" column="press"></result>
+                <result property="author" column="author"></result>
+            </association>
+        </collection>
+    </resultMap>
+
+    <select id="selectUserByName" parameterType="String" resultType="user">
+        select * from user where user_name = #{name}
+    </select>
+
+    <select id="selectUserByNameWithBook" parameterType="String" resultMap="userBorrowingInfo">
+        select
+          a.*,
+          b.book_id,
+          b.user_name,
+          b.appoint_time,
+          (case b.book_state
+            when '0' then '借阅中'
+            when '1' then '预约中'
+        end) book_state,
+          c.*
+        from
+          user a join book_borrowing_status b on a.user_name = b.user_name
+          join book_info c on b.book_id = c.book_id
+        where
+          a.user_name = #{name}
+    </select>
+
+    <update id="updateUserInfo">
+            UPDATE user
+            <trim prefix="set" suffixOverrides=",">
+                <if test="user.user_name!=null">user_name=#{user.user_name},</if>
+                <if test="user.user_password != null">user_password=#{user.user_password},</if>
+                <if test="user.phone_number!=null">phone_number=#{user.phone_number},</if>
+                <if test="user.day!=null">day=#{user.day},</if>
+                <if test="user.overdue!=null">overdue=#{user.overdue},</if>
+            </trim>
+            WHERE user_name=#{name}
+    </update>
+
+    <update id="updateUserDay">
+        update user set day = #{day} WHERE user_name=#{name}
+    </update>
+
+    <insert id="addUser" parameterType="user">
+        insert into user (user_name,user_password,phone_number,day,overdue) values (#{user.user_name},#{user.user_password},#{user.phone_number},#{user.day},0)
+    </insert>
+
+
+    <select id="showUsers" resultType="user">
+        select * from user
+    </select>
+</mapper>

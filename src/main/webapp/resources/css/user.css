@@ -1,0 +1,12 @@
+
+#image{
+    height: 30px;
+    width: 1000px;
+    margin: 0px auto 5px auto;
+    background-image: url("../images/壁纸1_meitu_1.jpg");
+}
+
+#tablediv{
+    width: 1000px;
+    margin: 0 auto;
+}

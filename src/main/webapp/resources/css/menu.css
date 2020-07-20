@@ -1,0 +1,14 @@
+
+#menu{
+    text-align: right;
+    height: 25px;
+    background-color: blanchedalmond;
+    margin-top: 10px;
+}
+ul, li {
+    list-style:none;
+}
+#menu ul li{
+    display: inline;
+    margin-right:20px ;
+}

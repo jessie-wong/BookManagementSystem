@@ -1,0 +1,39 @@
+#body{
+    min-height: 1000px;
+    width:1000px;
+    margin: 0 auto;
+    padding:0;
+    background-color: #fdfdfe;
+}
+#body #header{
+    height: 400px;
+    background-image: url("/resources/images/seventeen.png");
+}
+
+#menu{
+    text-align: right;
+    height: 20px;
+    background-image: url("../images/menu_meitu_1.jpg");
+    margin-top: 10px;
+}
+ul, li {
+    list-style:none;
+    color: white;;
+}
+#menu ul li{
+    display: inline;
+    margin-right:20px ;
+}
+#menu ul li a{
+    text-decoration: none;
+    color:white;
+}
+#menu ul li a:hover{
+    color: aquamarine;
+}
+#title{
+    height: 25px;
+    text-align: right;
+    font-size:small;
+    vertical-align: middle;
+}
